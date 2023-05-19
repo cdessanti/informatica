@@ -1,8 +1,10 @@
 
-domain=dmn_dag_infa_dev
+domain=domain
 username=Administrator
-password=GbbF76F34
-
+password=password
+show_usage_and_exit() {
+echo "report_domain_objects.sh -un|--username=[admin user] -pd|--password=[password] -dmn|--domain=[powercenter domain]"
+}
 getPrivileges() {
 for g in $1
 do
@@ -57,9 +59,39 @@ getOptions() {
   echo -e $options
   echo -e $options_command
 }
+
+for i in "$@"; do
+  case $i in
+    -un|--username)
+        username=${i#*=}
+        shift
+        ;;
+    -pw=*|--password=*)
+        password=${i#*=}
+        shift
+        ;;
+    -dmn=*|--domain=*)
+        domain=${i#*=}
+        shift
+        ;;
+    -h|--help)
+        show_usage_and_exit 0
+        shift
+        ;;
+    *)
+        show_usage_and_exit 100
+        ;;
+  esac;
+done;
+
 IFS='
 '
 
+result=$(infacmd.sh listDomainOptions -dn $domain -un $username -pd $password | grep -v "Command Run Succ")
+if [ "$result" == "" ]; then
+  echo "Cannot connect to domain "$domain". Check the username you are using has enoug privileges."
+  exit -1
+fi;
 echo "Domain:"$domain
 infacmd.sh listDomainOptions -dn $domain -un $username -pd $password | egrep -v "Command"
 nodes=$(infacmd.sh listNodes -dn $domain -un $username -pd $password | egrep -v "Command")
