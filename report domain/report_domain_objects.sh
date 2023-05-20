@@ -4,8 +4,8 @@ password=password
 users_and_groups=false
 
 show_usage_and_exit() {
-echo "report_domain_objects.sh -un|--username=[admin user] -pd|--password=[password] -dmn|--domain=[powercenter domain] -ug|--users_and_groups"
-exit $1
+  echo "report_domain_objects.sh -un|--username=[admin user] -pd|--password=[password] -dmn|--domain=[powercenter domain] -ug|--users_and_groups"
+  exit $1
 }
 
 getPrivileges() {
@@ -104,19 +104,20 @@ nodes=$(infacmd.sh listNodes -dn $domain -un $username -pd $password | egrep -v 
 node=''
 for i in $nodes
 do
-if [ "$node" == "" ]; then
-  node=$i
-fi;
-echo "Node:"$i
-infacmd.sh listNodeOptions -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
-infacmd.sh listNodeResources -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
-#infacmd.sh listNodeRoles -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
+  if [ "$node" == "" ]; then
+    node=$i
+  fi;
+  echo "Node:"$i
+  infacmd.sh listNodeOptions -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
+  infacmd.sh listNodeResources -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
+  #infacmd.sh listNodeRoles -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
 done;
-services=$(infacmd.sh listServices -dn $domain -un $username -pd $password | egrep -v "Command" | egrep "prs|pis|wsh")
+services=$(infacmd.sh listServices -dn $domain -un $username -pd $password | egrep -v "Command" | egrep -i "PRS|PIS|WSH|REPO|INTGR")
 for service in $services
 do
 echo "Service:"$service
 infacmd.sh listServiceNodes -dn $domain -un $username -pd $password -sn $service | egrep -v "Command"
+service_tr=$(echo $service |sed "s/INTGR/pis/g" | sed "s/REPO/prs/g" | tr '[:upper:]' '[:lower:]')
 if [[ $service == *"pis"* ]]; then
   getOptions list_of_pis_options.txt GetServiceOption
   getOptions list_of_pis_process_options.txt GetServiceProcessOption $node
@@ -130,12 +131,12 @@ done;
   infacmd.sh listAllUsers -dn $domain -un $username -pd $password | egrep -v "Command"
   infacmd.sh listAllRoles -dn $domain -un $username -pd $password | egrep -v "Command"
 if [ "$users_and_groups" == "true" ]; then
-groups=$(infacmd.sh listAllGroups -dn $domain -un $username -pd $password | egrep -v "Command")
-users=$(infacmd.sh listAllUsers -dn $domain -un $username -pd $password | egrep -v "Command")
-roles=$(infacmd.sh listAllRoles -dn $domain -un $username -pd $password | egrep -v "Command")
-getPermissions "$users" user listUserPermissions "-eu" >users_details.txt
-getPrivileges "$users" user listUserPrivileges "$services" >>users_details.txt
-getPermissions "$groups" group listGroupPermissions "-eg" >groups_and_roles_details.txt
-getPrivileges "$groups" group listGroupPrivileges "$services" >>groups_and_roles_details.txt
-getPrivileges "$roles" role listRolePrivileges "$services" >>groups_and_roles_details.txt
+  groups=$(infacmd.sh listAllGroups -dn $domain -un $username -pd $password | egrep -v "Command")
+  users=$(infacmd.sh listAllUsers -dn $domain -un $username -pd $password | egrep -v "Command")
+  roles=$(infacmd.sh listAllRoles -dn $domain -un $username -pd $password | egrep -v "Command")
+  getPermissions "$users" user listUserPermissions "-eu" >users_details.txt
+  getPrivileges "$users" user listUserPrivileges "$services" >>users_details.txt
+  getPermissions "$groups" group listGroupPermissions "-eg" >groups_and_roles_details.txt
+  getPrivileges "$groups" group listGroupPrivileges "$services" >>groups_and_roles_details.txt
+  getPrivileges "$roles" role listRolePrivileges "$services" >>groups_and_roles_details.txt
 fi;
