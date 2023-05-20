@@ -110,7 +110,7 @@ fi;
 echo "Node:"$i
 infacmd.sh listNodeOptions -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
 infacmd.sh listNodeResources -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
-infacmd.sh listNodeRoles -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
+#infacmd.sh listNodeRoles -dn $domain -un $username -pd $password -nn $i | egrep -v "Command"
 done;
 services=$(infacmd.sh listServices -dn $domain -un $username -pd $password | egrep -v "Command" | egrep "prs|pis|wsh")
 for service in $services
