@@ -1,0 +1,14 @@
+$PMBadFileDir
+$PMCacheDir
+$PMExtProcDir
+$PMLookupFileDir
+$PMRootDir
+$PMSessionLogDir
+$PMSourceFileDir
+$PMStorageDir
+$PMTargetFileDir
+$PMTempDir
+$PMWorkflowLogDir
+Codepage_ID
+JVMClassPath
+JVMMaxMemory
