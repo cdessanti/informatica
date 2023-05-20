@@ -1,10 +1,13 @@
-
 domain=domain
 username=Administrator
 password=password
+users_and_groups=false
+
 show_usage_and_exit() {
-echo "report_domain_objects.sh -un|--username=[admin user] -pd|--password=[password] -dmn|--domain=[powercenter domain]"
+echo "report_domain_objects.sh -un|--username=[admin user] -pd|--password=[password] -dmn|--domain=[powercenter domain] -ug|--users_and_groups"
+exit $1
 }
+
 getPrivileges() {
 for g in $1
 do
@@ -62,7 +65,7 @@ getOptions() {
 
 for i in "$@"; do
   case $i in
-    -un|--username)
+    -un=*|--username=*)
         username=${i#*=}
         shift
         ;;
@@ -72,6 +75,10 @@ for i in "$@"; do
         ;;
     -dmn=*|--domain=*)
         domain=${i#*=}
+        shift
+        ;;
+    -ug|--users_and_groups)
+        users_and_gropus=true
         shift
         ;;
     -h|--help)
@@ -86,10 +93,9 @@ done;
 
 IFS='
 '
-
-result=$(infacmd.sh listDomainOptions -dn $domain -un $username -pd $password | grep -v "Command Run Succ")
+result=$(infacmd.sh listDomainOptions -dn $domain -un $username -pd $password | grep "Command ran succ")
 if [ "$result" == "" ]; then
-  echo "Cannot connect to domain "$domain". Check the username you are using has enoug privileges."
+  echo "Cannot connect to domain "$domain". Check the domain name and that the user you are using has Administrator privileges."
   exit -1
 fi;
 echo "Domain:"$domain
@@ -120,11 +126,16 @@ elif  [[ $service == *"wsh"* ]]; then
   getOptions list_of_wsh_options.txt GetServiceOption
 fi;
 done;
+  infacmd.sh listAllGroups -dn $domain -un $username -pd $password | egrep -v "Command"
+  infacmd.sh listAllUsers -dn $domain -un $username -pd $password | egrep -v "Command"
+  infacmd.sh listAllRoles -dn $domain -un $username -pd $password | egrep -v "Command"
+if [ "$users_and_groups" == "true" ]; then
 groups=$(infacmd.sh listAllGroups -dn $domain -un $username -pd $password | egrep -v "Command")
 users=$(infacmd.sh listAllUsers -dn $domain -un $username -pd $password | egrep -v "Command")
 roles=$(infacmd.sh listAllRoles -dn $domain -un $username -pd $password | egrep -v "Command")
-getPermissions "$users" user listUserPermissions "-eu"
-getPrivileges "$users" user listUserPrivileges "$services"
-getPermissions "$groups" group listGroupPermissions "-eg"
-getPrivileges "$groups" group listGroupPrivileges "$services"
-getPrivileges "$roles" role listRolePrivileges "$services"
+getPermissions "$users" user listUserPermissions "-eu" >users_details.txt
+getPrivileges "$users" user listUserPrivileges "$services" >>users_details.txt
+getPermissions "$groups" group listGroupPermissions "-eg" >groups_and_roles_details.txt
+getPrivileges "$groups" group listGroupPrivileges "$services" >>groups_and_roles_details.txt
+getPrivileges "$roles" role listRolePrivileges "$services" >>groups_and_roles_details.txt
+fi;
