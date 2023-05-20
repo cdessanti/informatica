@@ -21,7 +21,7 @@ show_usage_and_exit() {
   echo -e "-b|--bulk-mode                      read the profile and scorecard names from a csv file specified with the parameter -csv|--file-csv."
   echo -e "-s|--single-mode                    run the profile and scorecard specified with -pn|--profile-name and -sc|--scorecard-name parameters"
   echo -e "-pp|--path-profiling=prj_name/path  the path to the profile objects in the project e.g. project/profilings/"
-  echo -e "-ps|--path-scorecard=prj_name/path  the path to the scorecard objects in the project e.g. project/scorecardss/"
+  echo -e "-ps|--path-scorecard=prj_name/path  the path to the scorecard objects in the project e.g. project/scorecards/"
   echo -e "-csv|--file-csv=/path/file.csv       the file name in csv format containing a list of propfiles and scorecards to run
                                             with the format EXECUTE,PROFILE_NAME,SCORECARD_NAME. EXECUTE can be t or F.
                                             this parameter is needed in bulk mode only"
