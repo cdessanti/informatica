@@ -1,0 +1,14 @@
+DTMTimeout
+ErrorSeverityLevel
+HubHostName
+HubPortNumber(http)
+HubPortNumber (https)
+InternalHostName
+InternalPortNumber
+MaxConcurrentRequests
+MaxLMConnections
+MaxQueueLength
+SessionExpiryPeriod
+URLScheme
+WSH_ENCODING
+KeystoreFile
