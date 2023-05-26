@@ -118,12 +118,12 @@ do
 echo "Service:"$service
 infacmd.sh listServiceNodes -dn $domain -un $username -pd $password -sn $service | egrep -v "Command"
 service_tr=$(echo $service |sed "s/INTGR/pis/g" | sed "s/REPO/prs/g" | tr '[:upper:]' '[:lower:]')
-if [[ $service == *"pis"* ]]; then
+if [[ $service_tr == "pis"* ]]; then
   getOptions list_of_pis_options.txt GetServiceOption
   getOptions list_of_pis_process_options.txt GetServiceProcessOption $node
-elif  [[ $service == *"prs"* ]]; then
+elif  [[ $service_tr == "prs"* ]]; then
   getOptions list_of_prs_options.txt GetServiceOption
-elif  [[ $service == *"wsh"* ]]; then
+elif  [[ $service_tr == "wsh"* ]]; then
   getOptions list_of_wsh_options.txt GetServiceOption
 fi;
 done;
