@@ -78,7 +78,7 @@ for i in "$@"; do
         shift
         ;;
     -ug|--users_and_groups)
-        users_and_gropus=true
+        users_and_groups=true
         shift
         ;;
     -h|--help)
