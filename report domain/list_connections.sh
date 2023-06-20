@@ -13,6 +13,6 @@ for conn in $connections
 do
   IFS=',' read connection_name connection_types database_type <<< $conn
   echo "CONNECTION: "$connection_name" TYPE: "$database_type
-  connection_detail=$(pmrep getconnectiondetails -n $connection_name -t relational | egrep -v "Informatica|success|Invoked|See patents|Completed at")
+  connection_detail=$(pmrep getconnectiondetails -n $connection_name -t relational | egrep -v "Rights|Informatica|success|Invoked|See patents|Completed at")
   echo $connection_detail  >>$details_file
 done;
