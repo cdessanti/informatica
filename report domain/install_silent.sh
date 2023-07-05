@@ -126,3 +126,5 @@ replace_value_template
 
 echo "Unsetting INFA variable for install"
 unset  INFA_HOME INFA_NODE_NAME INFA_DOMAINS_FILE
+echo "start installation"
+./silentinstall.sh

@@ -46,7 +46,7 @@ LICENSE_KEY_LOC=/tmp/license.key
 USER_INSTALL_DIR=/opt/informatica/104
 #USER_INSTALL_DIR=###INSTALLDIR###
 
-INSTALLATION_ENVIRONMENT=Test
+INSTALLATION_ENVIRONMENT=###Env###
 
 
 # The INSTALL_TYPE property determines whether to install or upgrade Informatica.
@@ -171,7 +171,7 @@ PASS_PHRASE_PASSWD=st5T6ynMqa
 
 
 JOIN_DOMAIN=0
-JOIN_DOMAIN=###joindomain###
+#JOIN_DOMAIN=###joindomain###
 
 
 
