@@ -43,7 +43,7 @@ LICENSE_KEY_LOC=/tmp/license.key
 #     Set the property if you are installing or upgrading Informatica.
 #     The property must point to a valid directory with write permissions enabled.
 
-USER_INSTALL_DIR=/opt/informatica/104
+USER_INSTALL_DIR=/opt/informatica
 #USER_INSTALL_DIR=###INSTALLDIR###
 
 INSTALLATION_ENVIRONMENT=###Env###
@@ -148,7 +148,7 @@ CREATE_DOMAIN=1
 
 
 # The directory to store the encryption key on the node created during the installation.
-KEY_DEST_LOCATION=/opt/informatica/104/isp/config/keys
+KEY_DEST_LOCATION=/opt/informatica/isp/config/keys
 #KEY_DEST_LOCATION=###INSTALLDIR###
 
 #Keyword to use to create an encryption key to secure sensitive data in the domain. Set the property only when you create a domain.
