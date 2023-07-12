@@ -136,7 +136,7 @@ KSTORE_FILE_LOCATION=/home/MyKeystoreFile
 
 # The HTTPS_PORT property represents the port number to use for the secure connection to Informatica Administrator.
 
-HTTPS_PORT=9443
+HTTPS_PORT=8443
 
 
 # The CREATE_DOMAIN property determines whether to create an Informatica domain.
