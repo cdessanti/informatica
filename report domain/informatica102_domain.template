@@ -378,7 +378,7 @@ DOMAIN_HOST_NAME=###GatewayHostName###
 # The NODE_NAME property represents the node to create on the machine. The node name is not the host name for the machine.
 
 #NODE_NAME=node01_pwcdt
-NODE_NAME=###NodeNam###
+NODE_NAME=###NodeName###
 
 # The DOMAIN_PORT property represents the port number.
 #     * If you create a domain, set the property to the port number for the node to create.
