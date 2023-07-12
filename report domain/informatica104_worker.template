@@ -136,7 +136,7 @@ KSTORE_FILE_LOCATION=/home/MyKeystoreFile
 
 # The HTTPS_PORT property represents the port number to use for the secure connection to Informatica Administrator.
 
-HTTPS_PORT=10443
+#HTTPS_PORT=10443
 
 
 # The CREATE_DOMAIN property determines whether to create an Informatica domain.
@@ -454,7 +454,7 @@ MIN_PORT=6213
 # The MAX_PORT property represents the highest port number in the range of port numbers that can be assigned to the application service processes that run on this node.
 #     Set the property if ADVANCE_PORT_CONFIG=1.
 
-MAX_PORT=7199
+MAX_PORT=6399
 
 
 # The TOMCAT_PORT property represents the port number used by the Service Manager on the node. Default is 6006.
