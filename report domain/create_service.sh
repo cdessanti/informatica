@@ -4,7 +4,7 @@ show_usage_and_exit() {
   echo "create_service.sh"
   echo "common parameters for repository and integration service type"
   echo "-un|--username=[admin user] -pw|--password=[password] -dmn|--domain=[domain name]"
-  echo "-nn|node_name=[node name] [-bn=|--backup-nodes]=[backup nodes] "
+  echo "-nn|node_name=[node name] [-bn=|--backup-nodes]=[backup nodes] -sd|--service_disabled"
   echo "-st|--service_type=[repository|integration] --service_name=[name of the service] -ln|--license_name=[licence name] -cp|--code_page=[code page of service]"
   echo "parameters needed for repository only"
   echo "-dba|--db-address=[alias for the database] -dbu|--db-user=[database username] -dbp|--db-password=[database password]"
@@ -86,6 +86,10 @@ for i in "$@"; do
         test_mode="true"
         shift
         ;;
+    -sd|--service_disabled)
+        service_disabled="true"
+        shift
+        ;;
     *)
         show_usage_and_exit 100
         ;;
@@ -129,13 +133,16 @@ build_command() {
     command=$command" "$common_options" -so CodePage="$code_page" ConnectString="$db_address" DBPassword="$db_password" DatabaseType=Oracle DBUser="$db_user
   elif [ "$service_type" == "integration" ]; then
     command="createIntegrationService"
-    command=$command" "$common_options" -rs "$repository_name" -ru "$username" -rp "$password" -sd -po codepage_id="$code_page
+    command=$command" "$common_options" -rs "$repository_name" -ru "$username" -rp "$password" -po codepage_id="$code_page
     if [ "$process_options" != "" ]; then
       command=$command" "$process_options
     fi
   fi
   if [ "$service_options" != "" ]; then
     command=$command" -so "$service_options
+  fi;
+  if [ "$service_disabled" == "false" ]; then
+     command=$command" -sd@
   fi;
   echo $command
 }
