@@ -4,7 +4,7 @@ show_usage_and_exit() {
   echo "create_service.sh"
   echo "common parameters for repository and integration service type"
   echo "-un|--username=[admin user] -pw|--password=[password] -dmn|--domain=[domain name]"
-  echo "-nn|node_name=[node name] [-bn=|--backup-nodes]=[backup nodes] -sd|--service_disabled"
+  echo "-nn|node_name=[node name] [-bn=|--backup-nodes]=[backup nodes] -sd|--service-disabled"
   echo "-st|--service_type=[repository|integration] --service_name=[name of the service] -ln|--license_name=[licence name] -cp|--code_page=[code page of service]"
   echo "parameters needed for repository only"
   echo "-dba|--db-address=[alias for the database] -dbu|--db-user=[database username] -dbp|--db-password=[database password]"
@@ -50,23 +50,23 @@ for i in "$@"; do
         db_password=${i#*=}
         shift
         ;;
-    -st=*|--service_type=*)
+    -st=*|--service-type=*)
         service_type=${i#*=}
         shift
         ;;
-    -sn=*|--service_name=*)
+    -sn=*|--service-name=*)
         service_name=${i#*=}
         shift
         ;;
-    -ln=*|--license_name=*)
+    -ln=*|--license-name=*)
         license_name=${i#*=}
         shift
         ;;
-    -cp=*|--code_page=*)
+    -cp=*|--code-page=*)
         code_page=${i#*=}
         shift
         ;;
-    -rn=*|--repository_name=*)
+    -rn=*|--repository-name=*)
         repository_name=${i#*=}
         shift
         ;;
@@ -74,11 +74,11 @@ for i in "$@"; do
         show_usage_and_exit 0
         shift
         ;;
-    -so=*|--service_options=*)
+    -so=*|--service-options=*)
         service_options=${i#*=}
         shift
         ;;
-    -po=*|--process_options=*)
+    -po=*|--process-options=*)
         process_options=${i#*=}
         shift
         ;;
@@ -86,7 +86,7 @@ for i in "$@"; do
         test_mode="true"
         shift
         ;;
-    -sd|--service_disabled)
+    -sd|--service-disabled)
         service_disabled="true"
         shift
         ;;
@@ -141,8 +141,8 @@ build_command() {
   if [ "$service_options" != "" ]; then
     command=$command" -so "$service_options
   fi;
-  if [ "$service_disabled" == "false" ]; then
-     command=$command" -sd@
+  if [ "$service_disabled" == "true" ]; then
+    command=$command" -sd "
   fi;
   echo $command
 }
