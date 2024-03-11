@@ -1,8 +1,14 @@
 #!/bin/bash
+function show_usage {
+  echo "usage: list_connections.sh domain_name repository_name admin_user password"
+}
+if [ "$?" != "4" ]; then
+  show_usage
+fi;
 pmrep connect -r $2 -d $1 -n $3 -x $4 2>&1 >/dev/null
 if [ "$?" != "0" ]; then
-  echo "cannot connect existing";
-  echo "usage: list_connections.sh domain_name repository_name admin_user password"
+  echo "cannot connect exiting";
+  show_usage
 fi;
 connections=$(pmrep listconnections -t | egrep "relational|loader|ftp")
 details_file=connection_details_for_repository_$2.txt
